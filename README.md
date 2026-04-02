@@ -1,6 +1,6 @@
-# DADA2 Streamlit Score App
+# DADA2 Genetic Referral Score
 
-Standalone Streamlit calculator for a single patient-level DADA2 score.
+Standalone Streamlit calculator for the DADA2 Genetic Referral Score.
 
 Scoring rule:
 - Bicytopenia `+5`

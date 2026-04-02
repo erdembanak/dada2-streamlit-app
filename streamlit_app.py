@@ -30,7 +30,7 @@ FEATURE_META = {
 }
 
 
-SCORE_NAME = "DADA2 Clinical Score"
+SCORE_NAME = "DADA2 Genetic Referral Score"
 SCORE_HEADLINE = "Select the relevant clinical findings to calculate the score."
 SCORE_THRESHOLD = 10
 SCORE_CRITERIA = [
@@ -213,13 +213,13 @@ def build_summary(
 
 def main() -> None:
     st.set_page_config(
-        page_title="DADA2 Clinical Score",
+        page_title="DADA2 Genetic Referral Score",
         page_icon="🩺",
         layout="centered",
     )
     apply_styles()
 
-    st.title("DADA2 Clinical Score")
+    st.title("DADA2 Genetic Referral Score")
     st.caption(
         "Patient-level calculator only. This app does not load or display any existing dataset."
     )
@@ -246,14 +246,15 @@ def main() -> None:
             render_rule_table(criteria, threshold)
 
     st.markdown("### Findings")
-    left_col, right_col = st.columns(2)
-    for index, criterion in enumerate(criteria):
-        container = left_col if index % 2 == 0 else right_col
-        container.checkbox(
-            f"{criterion.label} ({format_points(criterion.points)})",
-            key=criterion.key,
-            help=criterion.help_text,
-        )
+    for index in range(0, len(criteria), 2):
+        row = criteria[index:index + 2]
+        columns = st.columns(2)
+        for column, criterion in zip(columns, row):
+            column.checkbox(
+                f"{criterion.label} ({format_points(criterion.points)})",
+                key=criterion.key,
+                help=criterion.help_text,
+            )
 
     score, selected = compute_score(criteria)
     meets_threshold = score >= threshold
