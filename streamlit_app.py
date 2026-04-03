@@ -33,7 +33,7 @@ FEATURE_META = {
 SCORE_NAME = "DADA2 Genetic Referral Score"
 SCORE_HEADLINE = "Select the relevant clinical findings to calculate the score."
 SCORE_THRESHOLD = 10
-SCORE_CRITERIA = [
+RAW_SCORE_CRITERIA = [
     Criterion("hem_bicytopenia", "Bicytopenia", 5, FEATURE_META["hem_bicytopenia"]),
     Criterion("musculoskeletal", "Musculoskeletal involvement", 4, FEATURE_META["musculoskeletal"]),
     Criterion("hypogammaglob", "Hypogammaglobulinemia", 4, FEATURE_META["hypogammaglob"]),
@@ -44,6 +44,10 @@ SCORE_CRITERIA = [
     Criterion("consanguinity", "Consanguinity", 1, FEATURE_META["consanguinity"]),
     Criterion("thrombocytosis", "Thrombocytosis", -3, FEATURE_META["thrombocytosis"]),
 ]
+SCORE_CRITERIA = sorted(
+    RAW_SCORE_CRITERIA,
+    key=lambda criterion: (-criterion.points, criterion.label.lower()),
+)
 
 
 def apply_styles() -> None:
